@@ -39,6 +39,6 @@ variable "tags" {
 }
 
 variable "type" {
-  default     = "g6-nano-1"
+  default     = "g6-nanode-1"
   description = "Type of instance"
 }
