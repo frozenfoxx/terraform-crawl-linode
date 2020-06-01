@@ -1,6 +1,16 @@
+variable "acme_email" {
+  default     = ""
+  description = "Email address for Let's Encrypt"
+}
+
 variable "authorized_keys" {
   default     = [""]
   description = "List of public keys used for SSH connections"
+}
+
+variable "domain" {
+  default     = ""
+  description = "Domain to attach to for Let's Encrypt and Traefik"
 }
 
 variable "image" {
@@ -36,6 +46,16 @@ variable "root_pass" {
 variable "tags" {
   default     = [ "games" ]
   description = "Tags to apply"
+}
+
+variable "traefik_admin_htpassword" {
+  default     = ""
+  description = "traefik admin password, ht-password encrypted"
+}
+
+variable "traefik_admin_username" {
+  default     = "admin"
+  description = "traefik admin user"
 }
 
 variable "type" {

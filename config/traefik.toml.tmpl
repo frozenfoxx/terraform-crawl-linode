@@ -5,7 +5,7 @@ defaultEntryPoints = ["http", "https"]
     address = ":8080"
     [entryPoints.dashboard.auth]
       [entryPoints.dashboard.auth.basic]
-        users = ["${TRAEFIK_ADMIN_USERNAME}:${TRAEFIK_ADMIN_PASSWORD_ENCRYPTED}"]
+        users = ["${TRAEFIK_ADMIN_USERNAME}:${TRAEFIK_ADMIN_HTPASSWORD}"]
   [entryPoints.http]
     address = ":80"
       [entryPoints.http.redirect]

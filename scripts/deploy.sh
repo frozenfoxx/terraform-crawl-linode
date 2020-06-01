@@ -4,8 +4,8 @@
 ACME_EMAIL=${ACME_EMAIL:-''}
 DATA_DIR=${DATA_DIR:-'/data'}
 DOMAIN=${DOMAIN:-''}
+TRAEFIK_ADMIN_HTPASSWORD=${TRAEFIK_ADMIN_HTPASSWORD:-''}
 TRAEFIK_ADMIN_USERNAME=${TRAEFIK_ADMIN_USERNAME:-'admin'}
-TRAEFIK_ADMIN_PASSWORD_ENCRYPTED=${TRAEFIK_ADMIN_PASSWORD_ENCRYPTED:-''}
 
 CONFIG_DIR="${DATA_DIR}/config"
 
@@ -15,7 +15,7 @@ CONFIG_DIR="${DATA_DIR}/config"
 build_traefik_config()
 {
   echo "Completing traefik template..."
-  envsubst '${ACME_EMAIL},${DOMAIN},${TRAEFIK_ADMIN_USERNAME},${TRAEFIK_ADMIN_PASSWORD_ENCRYPTED}' < "${CONFIG_DIR}/traefik.toml.tmpl" > ${DATA_DIR}/traefik/traefik.toml
+  envsubst '${ACME_EMAIL},${DOMAIN},${TRAEFIK_ADMIN_USERNAME},${TRAEFIK_ADMIN_HTPASSWORD}' < "${CONFIG_DIR}/traefik.toml.tmpl" > ${DATA_DIR}/traefik/traefik.toml
 }
 
 ## Create directories for the containers
@@ -37,13 +37,13 @@ usage()
 {
   echo "[Environment Variables] deploy.sh [options]"
   echo "  Environment Variables:"
-  echo "    ACME_EMAIL                         email for Let's Encrypt"
-  echo "    DATA_DIR                           directory containing data files for containers"
-  echo "    DOMAIN                             domain for Let's Encrypt"
-  echo "    TRAEFIK_ADMIN_USERNAME             traefik admin user (default: 'admin')"
-  echo "    TRAEFIK_ADMIN_PASSWORD_ENCRYPTED   traefik admin password, ht-password encrypted"
+  echo "    ACME_EMAIL                  email for Let's Encrypt"
+  echo "    DATA_DIR                    directory containing data files for containers"
+  echo "    DOMAIN                      domain to attach to for Let's Encrypt and Traefik"
+  echo "    TRAEFIK_ADMIN_USERNAME      traefik admin user (default: 'admin')"
+  echo "    TRAEFIK_ADMIN_HTPASSWORD    traefik admin password, ht-password encrypted"
   echo "  Options:"
-  echo "    -h | --help                        display this usage information"
+  echo "    -h | --help                 display this usage information"
 }
 
 # Logic
