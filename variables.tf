@@ -14,7 +14,7 @@ variable "domain" {
 }
 
 variable "image" {
-  default     = "linode/ubuntu18.04"
+  default     = "linode/ubuntu20.04"
   description = "Image used for deployment"
 }
 
