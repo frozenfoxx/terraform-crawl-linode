@@ -27,7 +27,7 @@ resource "linode_instance" "main" {
     inline = [
       "chmod 755 /tmp/scripts/*.sh",
       "/tmp/scripts/install_docker.sh",
-      "/tmp/scripts/install_crawl.sh"
+      "/tmp/scripts/deploy.sh"
     ]
   }
 }
