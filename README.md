@@ -15,11 +15,13 @@ To use this module, in your `main.tf` TerraForm code for a deployment insert the
 module "crawl" {
   source = "github.com/frozenfoxx/terraform-crawl-linode"
 
-  authorized_keys     = ["${linode_sshkey.terraform.ssh_key}"]
-  image               = var.image
-  name                = "crawl"
-  private_key         = chomp(file(var.private_ssh_key))
-  region              = var.region
-  type                = var.type
+  authorized_keys          = ["${linode_sshkey.terraform.ssh_key}"]
+  image                    = var.image
+  name                     = "crawl"
+  private_key              = chomp(file(var.private_ssh_key))
+  region                   = var.region
+  traefik_admin_htpassword = var.traefik_admin_htpassword
+  traefik_admin_username   = var.traefik_admin_username
+  type                     = var.type
 }
 ```

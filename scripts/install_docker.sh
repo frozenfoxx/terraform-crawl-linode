@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 # Variables
+DATA_DIR=${DATA_DIR:-'/data'}
 DEBIAN_FRONTEND=noninteractive
 DEPENDENCIES="apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
-PACKAGES="docker-ce docker-ce-cli docker-compose containerd.io"
+PACKAGES="docker-ce docker-ce-cli containerd.io"
 REPO_URL="https://download.docker.com/linux/ubuntu"
 REPO_GPG_KEY="https://download.docker.com/linux/ubuntu/gpg"
 
@@ -30,6 +31,13 @@ configure_user()
   echo "Configuring user to run docker..."
   groupadd docker
   usermod -aG docker ${USER}
+}
+
+## Create data directory
+create_data_dir()
+{
+  echo "Creating data directory..."
+  mkdir -p ${DATA_DIR}
 }
 
 ## Install Docker dependencies
@@ -61,3 +69,4 @@ install_deps
 add_repo
 install_docker
 configure_user
+create_data_dir

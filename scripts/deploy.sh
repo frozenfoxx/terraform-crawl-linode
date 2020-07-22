@@ -2,12 +2,11 @@
 
 # Variables
 ACME_EMAIL=${ACME_EMAIL:-''}
+CONFIG_DIR=${CONFIG_DIR:-'/data'}
 DATA_DIR=${DATA_DIR:-'/data'}
 DOMAIN=${DOMAIN:-''}
 TRAEFIK_ADMIN_HTPASSWORD=${TRAEFIK_ADMIN_HTPASSWORD:-''}
 TRAEFIK_ADMIN_USERNAME=${TRAEFIK_ADMIN_USERNAME:-'admin'}
-
-CONFIG_DIR="${DATA_DIR}/config"
 
 # Functions
 
@@ -56,3 +55,4 @@ esac
 
 create_data_dirs
 build_traefik_config
+run_docker_compose

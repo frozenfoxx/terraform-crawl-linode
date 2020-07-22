@@ -6,8 +6,8 @@ resource "linode_instance" "main" {
   authorized_keys = var.authorized_keys
   root_pass       = var.root_pass
 
-  group = var.group
-  tags = var.tags
+  group           = var.group
+  tags            = var.tags
 
   connection {
     type        = "ssh"
@@ -19,6 +19,11 @@ resource "linode_instance" "main" {
   }
 
   provisioner "file" {
+    source      = "${path.module}/config"
+    destination = "/tmp"
+  }
+
+  provisioner "file" {
     source      = "${path.module}/scripts"
     destination = "/tmp"
   }
@@ -26,8 +31,11 @@ resource "linode_instance" "main" {
   provisioner "remote-exec" {
     inline = [
       "chmod 755 /tmp/scripts/*.sh",
-      "/tmp/scripts/install_docker.sh",
-      "/tmp/scripts/deploy.sh"
+      "mv /tmp/scripts/*.sh /usr/local/bin/",
+      "/usr/local/bin/install_docker.sh",
+      "/usr/local/bin/install_fail2ban.sh",
+      "mv /tmp/config/* /data/",
+      "ACME_EMAIL=\"${var.acme_email}\" TRAEFIK_ADMIN_HTPASSWORD=\"${var.traefik_admin_htpassword}\" TRAEFIK_ADMIN_USERNAME=\"${var.traefik_admin_username}\" /usr/local/bin/deploy.sh"
     ]
   }
 }
