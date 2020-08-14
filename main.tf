@@ -35,7 +35,7 @@ resource "linode_instance" "main" {
       "/usr/local/bin/install_docker.sh",
       "/usr/local/bin/install_fail2ban.sh",
       "mv /tmp/config/* /data/",
-      "ACME_EMAIL=\"${var.acme_email}\" TRAEFIK_ADMIN_HTPASSWORD=\"${var.traefik_admin_htpassword}\" TRAEFIK_ADMIN_USERNAME=\"${var.traefik_admin_username}\" /usr/local/bin/deploy.sh"
+      "DOMAIN=\"${var.domain}\" TRAEFIK_ACME_EMAIL=\"${var.traefik_acme_email}\" TRAEFIK_ADMIN_HTPASSWORD=\"${var.traefik_admin_htpassword}\" TRAEFIK_ADMIN_USERNAME=\"${var.traefik_admin_username}\" /usr/local/bin/deploy.sh"
     ]
   }
 }

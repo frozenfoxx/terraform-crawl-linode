@@ -48,6 +48,11 @@ variable "tags" {
   description = "Tags to apply"
 }
 
+variable "traefik_acme_email" {
+  default     = ""
+  description = "Email used for Lets Encrypt SSL certificate generation"
+}
+
 variable "traefik_admin_htpassword" {
   default     = ""
   description = "traefik admin password, ht-password encrypted"
