@@ -1,0 +1,17 @@
+version "3.8"
+services:
+  crawl:
+    image: frozenfoxx/crawl:latest
+    volumes:
+      - type: bind
+        source: /data/crawl
+        target: /data
+  traefik:
+    image: traefik:latest
+    volumes:
+      - type: bind
+        source: /data/traefik/acme.json
+        target: /acme.json
+      - type: bind
+        source: /data/traefik/traefik.toml
+        target: /traefik.toml

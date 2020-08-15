@@ -15,6 +15,10 @@ build_traefik_config()
 {
   echo "Completing traefik template..."
   envsubst '${ACME_EMAIL},${DOMAIN},${TRAEFIK_ADMIN_USERNAME},${TRAEFIK_ADMIN_HTPASSWORD}' < "${CONFIG_DIR}/traefik.toml.tmpl" > ${DATA_DIR}/traefik/traefik.toml
+
+  echo "Creating empty acme.json for ACME config..."
+  touch ${DATA_DIR}/traefik/acme.json
+  chmod 600 ${DATA_DIR}/traefik/acme.json
 }
 
 ## Create directories for the containers
