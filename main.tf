@@ -30,11 +30,11 @@ resource "linode_instance" "main" {
 
   provisioner "remote-exec" {
     inline = [
-      "chmod 755 /tmp/scripts/*.sh",
-      "mv /tmp/scripts/*.sh /usr/local/bin/",
+      "mv /tmp/config/* /data/",
+      "chmod 755 /tmp/scripts/*",
+      "mv /tmp/scripts/* /usr/local/bin/",
       "/usr/local/bin/install_docker.sh",
       "/usr/local/bin/install_fail2ban.sh",
-      "mv /tmp/config/* /data/",
       "DOMAIN=\"${var.domain}\" TRAEFIK_ACME_EMAIL=\"${var.traefik_acme_email}\" TRAEFIK_ADMIN_HTPASSWORD=\"${var.traefik_admin_htpassword}\" TRAEFIK_ADMIN_USERNAME=\"${var.traefik_admin_username}\" /usr/local/bin/deploy.sh"
     ]
   }

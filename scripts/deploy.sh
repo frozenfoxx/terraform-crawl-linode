@@ -10,6 +10,13 @@ TRAEFIK_ADMIN_USERNAME=${TRAEFIK_ADMIN_USERNAME:-'admin'}
 
 # Functions
 
+## Build the configuration file for docker-compose
+build_docker_compose_config()
+{
+  echo "Completing docker-compose template..."
+  envsubst '${DOMAIN}' < "${CONFIG_DIR}/docker-compose.yaml.tmpl" > ${DATA_DIR}/docker-compose.yaml
+}
+
 ## Build the configuration file for traefik
 build_traefik_config()
 {
@@ -59,4 +66,5 @@ esac
 
 create_data_dirs
 build_traefik_config
+build_docker_compose_config
 run_docker_compose

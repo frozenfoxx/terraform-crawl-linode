@@ -1,0 +1,44 @@
+version: "3.8"
+
+networks:
+  web:
+    external: false
+
+services:
+  crawl:
+    image: frozenfoxx/crawl:latest
+    labels:
+      - traefik.backend=blog
+      - traefik.frontend.rule=Host:crawl.${DOMAIN}
+      - traefik.docker.network=web
+      - traefik.port=80
+    volumes:
+      - type: bind
+        source: /data/crawl
+        target: /data
+    networks:
+      - web
+
+  traefik:
+    image: traefik:latest
+    container_name: "traefik"
+    command:
+      - "-l traefik.frontend.rule=Host:monitor.${DOMAIN}"
+      - "-l traefik.port=8080"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - type: bind
+        source: /data/traefik/acme.json
+        target: /acme.json
+      - type: bind
+        source: /data/traefik/traefik.toml
+        target: /traefik.toml
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - web
