@@ -5,8 +5,6 @@ ACME_EMAIL=${ACME_EMAIL:-''}
 CONFIG_DIR=${CONFIG_DIR:-'/data'}
 DATA_DIR=${DATA_DIR:-'/data'}
 DOMAIN=${DOMAIN:-''}
-TRAEFIK_ADMIN_HTPASSWORD=${TRAEFIK_ADMIN_HTPASSWORD:-''}
-TRAEFIK_ADMIN_USERNAME=${TRAEFIK_ADMIN_USERNAME:-'admin'}
 
 # Functions
 
@@ -20,8 +18,11 @@ build_docker_compose_config()
 ## Build the configuration file for traefik
 build_traefik_config()
 {
-  echo "Completing traefik template..."
-  envsubst '${ACME_EMAIL},${DOMAIN},${TRAEFIK_ADMIN_USERNAME},${TRAEFIK_ADMIN_HTPASSWORD}' < "${CONFIG_DIR}/traefik.toml.tmpl" > ${DATA_DIR}/traefik/traefik.toml
+  echo "Completing traefik configuration template..."
+  envsubst '${ACME_EMAIL}' < "${CONFIG_DIR}/traefik.toml.tmpl" > ${DATA_DIR}/traefik/traefik.toml
+
+  echo "Deploying traefik dynamic configuration file..."
+  cp ${CONFIG_DIR}/force-https.toml ${DATA_DIR}/traefik/dynamic/force-https.toml
 
   echo "Creating empty acme.json for ACME config..."
   touch ${DATA_DIR}/traefik/acme.json
@@ -33,6 +34,7 @@ create_data_dirs()
 {
   mkdir -p ${DATA_DIR}/crawl
   mkdir -p ${DATA_DIR}/traefik
+  mkdir -p ${DATA_DIR}/traefik/dynamic
 }
 
 ## Run the docker-compose file
@@ -48,10 +50,9 @@ usage()
   echo "[Environment Variables] deploy.sh [options]"
   echo "  Environment Variables:"
   echo "    ACME_EMAIL                  email for Let's Encrypt"
+  echo "    CONFIG_DIR                  directory containing configuration templates and files"
   echo "    DATA_DIR                    directory containing data files for containers"
   echo "    DOMAIN                      domain to attach to for Let's Encrypt and Traefik"
-  echo "    TRAEFIK_ADMIN_USERNAME      traefik admin user (default: 'admin')"
-  echo "    TRAEFIK_ADMIN_HTPASSWORD    traefik admin password, ht-password encrypted"
   echo "  Options:"
   echo "    -h | --help                 display this usage information"
 }

@@ -1,31 +1,19 @@
-defaultEntryPoints = ["http", "https"]
+[log]
+  level = "WARN"
+
+[providers]
+  [providers.docker]
+    exposedByDefault = false
+  [providers.file]
+    directory = "/data/traefik/dynamic"
 
 [entryPoints]
-  [entryPoints.dashboard]
-    address = ":8080"
-    [entryPoints.dashboard.auth]
-      [entryPoints.dashboard.auth.basic]
-        users = ["${TRAEFIK_ADMIN_USERNAME}:${TRAEFIK_ADMIN_HTPASSWORD}"]
   [entryPoints.http]
     address = ":80"
-      [entryPoints.http.redirect]
-        entryPoint = "https"
   [entryPoints.https]
     address = ":443"
-      [entryPoints.https.tls]
 
-[api]
-entrypoint="dashboard"
-
-[acme]
-email = "${ACME_EMAIL}"
-storage = "acme.json"
-entryPoint = "https"
-onHostRule = true
-  [acme.httpChallenge]
-  entryPoint = "http"
-
-[docker]
-domain = "${DOMAIN}"
-watch = true
-network = "web"
+[certificatesResolvers.lets-encrypt.acme]
+  storage = "/data/traefik/acme.json"
+  email = "${ACME_EMAIL}"
+  [certificatesResolvers.lets-encrypt.acme.tlsChallenge]

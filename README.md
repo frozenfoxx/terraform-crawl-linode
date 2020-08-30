@@ -22,8 +22,6 @@ module "crawl" {
   private_key              = chomp(file(var.private_ssh_key))
   region                   = var.region
   traefik_acme_email       = var.traefik_acme_email
-  traefik_admin_htpassword = var.traefik_admin_htpassword
-  traefik_admin_username   = var.traefik_admin_username
   type                     = var.type
 }
 ```

@@ -53,16 +53,6 @@ variable "traefik_acme_email" {
   description = "Email used for Lets Encrypt SSL certificate generation"
 }
 
-variable "traefik_admin_htpassword" {
-  default     = ""
-  description = "traefik admin password, ht-password encrypted"
-}
-
-variable "traefik_admin_username" {
-  default     = "admin"
-  description = "traefik admin user"
-}
-
 variable "type" {
   default     = "g6-nanode-1"
   description = "Type of instance"

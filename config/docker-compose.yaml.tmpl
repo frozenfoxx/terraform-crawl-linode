@@ -7,38 +7,27 @@ networks:
 services:
   crawl:
     image: frozenfoxx/crawl:latest
+    container_name: "crawl_webtiles"
+    restart: always
     labels:
-      - traefik.backend=blog
-      - traefik.frontend.rule=Host:crawl.${DOMAIN}
-      - traefik.docker.network=web
-      - traefik.port=80
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.crawl.rule=Host(`${DOMAIN}`)'
+      - 'traefik.http.routers.crawl.tls=true'
+      - 'traefik.http.routers.crawl.tls.certresolver=lets-encrypt'
     volumes:
-      - type: bind
-        source: /data/crawl
-        target: /data
+      - /data/crawl:/data
     networks:
       - web
 
   traefik:
     image: traefik:latest
     container_name: "traefik"
-    command:
-      - "-l traefik.frontend.rule=Host:monitor.${DOMAIN}"
-      - "-l traefik.port=8080"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
+    restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
-      - type: bind
-        source: /data/traefik/acme.json
-        target: /acme.json
-      - type: bind
-        source: /data/traefik/traefik.toml
-        target: /traefik.toml
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - /data/traefik:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - web
