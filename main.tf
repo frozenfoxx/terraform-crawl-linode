@@ -30,11 +30,11 @@ resource "linode_instance" "main" {
 
   provisioner "remote-exec" {
     inline = [
-      "mv /tmp/config/* /data/",
       "chmod 755 /tmp/scripts/*",
       "mv /tmp/scripts/* /usr/local/bin/",
       "/usr/local/bin/install_docker.sh",
       "/usr/local/bin/install_fail2ban.sh",
+      "mv /tmp/config/* /data/",
       "ACME_EMAIL=\"${var.traefik_acme_email}\" DOMAIN=\"${var.domain}\" /usr/local/bin/deploy.sh"
     ]
   }
