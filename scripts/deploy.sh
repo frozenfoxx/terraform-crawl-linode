@@ -40,8 +40,7 @@ create_data_dirs()
 ## Run the docker-compose file
 run_docker_compose()
 {
-  cd ${CONFIG_DIR}
-  docker-compose -d up
+  docker-compose -f ${DATA_DIR}/docker-compose.yaml up --detach
 }
 
 ## Display usage information
