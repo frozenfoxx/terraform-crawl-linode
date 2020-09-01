@@ -9,6 +9,8 @@ services:
     image: frozenfoxx/crawl:latest
     container_name: "crawl_webtiles"
     restart: always
+    expose:
+      - '8080'
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.crawl.rule=Host(`${DOMAIN}`)'
