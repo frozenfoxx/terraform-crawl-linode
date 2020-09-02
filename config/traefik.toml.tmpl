@@ -5,7 +5,7 @@
   [providers.docker]
     exposedByDefault = false
   [providers.file]
-    directory = "/data/traefik/dynamic"
+    directory = "/data/dynamic"
 
 [entryPoints]
   [entryPoints.http]
@@ -14,6 +14,6 @@
     address = ":443"
 
 [certificatesResolvers.lets-encrypt.acme]
-  storage = "/data/traefik/acme.json"
+  storage = "/data/acme.json"
   email = "${ACME_EMAIL}"
   [certificatesResolvers.lets-encrypt.acme.tlsChallenge]
