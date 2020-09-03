@@ -31,7 +31,7 @@ run_container()
 stop_container()
 {
   echo "Stopping the container..."
-  docker kill crawl-server
+  docker kill crawl_webtiles
   echo y | docker container prune
 }
 
