@@ -9,7 +9,7 @@ services:
       - '8080'
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.crawl.rule=Host(`${DOMAIN}`)'
+      - 'traefik.http.routers.crawl.rule=Host(`${FQDN}`)'
       - 'traefik.http.routers.crawl.tls=true'
       - 'traefik.http.routers.crawl.tls.certresolver=lets-encrypt'
     volumes:

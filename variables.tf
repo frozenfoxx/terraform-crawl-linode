@@ -8,7 +8,7 @@ variable "authorized_keys" {
   description = "List of public keys used for SSH connections"
 }
 
-variable "domain" {
+variable "fqdn" {
   default     = ""
   description = "Domain to attach to for Let's Encrypt and Traefik"
 }

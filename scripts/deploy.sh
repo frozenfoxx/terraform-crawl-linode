@@ -4,7 +4,7 @@
 ACME_EMAIL=${ACME_EMAIL:-''}
 CONFIG_DIR=${CONFIG_DIR:-'/data'}
 DATA_DIR=${DATA_DIR:-'/data'}
-DOMAIN=${DOMAIN:-''}
+FQDN=${FQDN:-''}
 
 # Functions
 
@@ -12,7 +12,7 @@ DOMAIN=${DOMAIN:-''}
 build_docker_compose_config()
 {
   echo "Completing docker-compose template..."
-  envsubst '${DOMAIN}' < "${CONFIG_DIR}/docker-compose.yaml.tmpl" > ${DATA_DIR}/docker-compose.yaml
+  envsubst '${FQDN}' < "${CONFIG_DIR}/docker-compose.yaml.tmpl" > ${DATA_DIR}/docker-compose.yaml
 }
 
 ## Build the configuration file for traefik
@@ -51,7 +51,7 @@ usage()
   echo "    ACME_EMAIL                  email for Let's Encrypt"
   echo "    CONFIG_DIR                  directory containing configuration templates and files"
   echo "    DATA_DIR                    directory containing data files for containers"
-  echo "    DOMAIN                      domain to attach to for Let's Encrypt and Traefik"
+  echo "    FQDN                        domain to attach to for Let's Encrypt and Traefik"
   echo "  Options:"
   echo "    -h | --help                 display this usage information"
 }
