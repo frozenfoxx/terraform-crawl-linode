@@ -1,9 +1,5 @@
 version: "3"
 
-networks:
-  web:
-    external: false
-
 services:
   crawl:
     image: frozenfoxx/crawl:latest
@@ -18,8 +14,6 @@ services:
       - 'traefik.http.routers.crawl.tls.certresolver=lets-encrypt'
     volumes:
       - /data/crawl:/data
-    networks:
-      - web
 
   traefik:
     image: traefik:latest
@@ -31,5 +25,3 @@ services:
     volumes:
       - /data/traefik:/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - web
