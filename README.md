@@ -5,7 +5,7 @@ Deploy a DCSS server in Linode
 # Requirements
 
 * a Linode account.
-* the `linode.ssh_key` resource is handled elsewhere.
+* the `linode_sshkey` resource is handled elsewhere.
 
 # Usage
 
